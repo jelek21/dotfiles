@@ -14,7 +14,7 @@ export PATH=$HOME/bin:/usr/local/bin:/usr/sbin:$HOME/.gem/ruby/2.7.0/bin:$HOME/.
 export DISPLAY=$(grep -oP "(?<=nameserver ).+" /etc/resolv.conf):0
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/jerome/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load 
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
