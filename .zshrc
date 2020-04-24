@@ -16,6 +16,9 @@ export DISPLAY=$(grep -oP "(?<=nameserver ).+" /etc/resolv.conf):0
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
+# Path to your alias file
+export ALIAS_FILE="$HOME/.config/zsh/zsh_custom"
+
 # Set name of the theme to load 
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="agnoster"
@@ -131,7 +134,7 @@ fi
 source "${HOME}/.zgen/zgen.zsh"
 # End ZGEN
 
-# Launch genie bottle
+# Launch genie bottle (WSL)
 if [[ ! -v INSIDE_GENIE  ]]; then
     read "yn? * Not inside the genie bottle; enter it? "
     echo
@@ -142,4 +145,16 @@ if [[ ! -v INSIDE_GENIE  ]]; then
     fi
 fi
 
+# Load alias file
+source $ALIAS_FILE
+function alias-new() {
+    if [[ -z $1 || -z $2 $# -gt 2 ]]; then
+        echo "usage :"
+        echo "\t\$$0 ll 'ls -l'"
+    else
+        echo "a $1='$2'" >> $ALIAS_FILE && echo "alias successfully added to $ALIAS_FILE"
+    fi
+}
+
+# broot
 source /home/jerome/.config/broot/launcher/bash/br
