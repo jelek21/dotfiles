@@ -12,6 +12,8 @@
 !custom
 !themes
 !plugins
+!git
+!gitk
 !.config/zsh/custom/themes/**
 !.config/zsh/custom/plugins/**
 !.config/nvim/init.vim

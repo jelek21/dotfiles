@@ -141,3 +141,5 @@ if [[ ! -v INSIDE_GENIE  ]]; then
         exec /usr/bin/genie -s
     fi
 fi
+
+source /home/jerome/.config/broot/launcher/bash/br
