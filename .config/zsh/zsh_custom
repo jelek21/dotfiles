@@ -100,3 +100,7 @@ zplug "MichaelAquilina/zsh-you-should-use"
 zgen load MichaelAquilina/zsh-emojis
 zgen load rcruzper/zsh-git-plugin
 zgen load seletskiy/zsh-git-smart-commands
+
+## Aliases added using alias-new function
+a gitk='(gitk &)'
+a gitg='(git gui &)'

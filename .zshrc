@@ -135,24 +135,25 @@ source "${HOME}/.zgen/zgen.zsh"
 # End ZGEN
 
 # Launch genie bottle (WSL)
-if [[ ! -v INSIDE_GENIE  ]]; then
-    read "yn? * Not inside the genie bottle; enter it? "
-    echo
+# if [[ ! -v INSIDE_GENIE  ]]; then
+#     read "yn? * Not inside the genie bottle; enter it? "
+#     echo
 
-    if [[ $yn == "y"  ]]; then
-        echo "Starting genie:"
-        exec /usr/bin/genie -s
-    fi
-fi
+#     if [[ $yn == "y"  ]]; then
+#         echo "Starting genie:"
+#         exec /usr/bin/genie -s
+#     fi
+# fi
 
 # Load alias file
 source $ALIAS_FILE
 function alias-new() {
-    if [[ -z $1 || -z $2 $# -gt 2 ]]; then
+    if [[ -z "$1" || -z "$2" || $# -gt 2 ]]; then
         echo "usage :"
         echo "\t\$$0 ll 'ls -l'"
     else
-        echo "a $1='$2'" >> $ALIAS_FILE && echo "alias successfully added to $ALIAS_FILE"
+        echo -e "\na $1='$2'" >> $ALIAS_FILE && echo "alias successfully added to $ALIAS_FILE"
+        source $ALIAS_FILE
     fi
 }
 
