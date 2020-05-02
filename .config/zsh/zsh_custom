@@ -60,7 +60,6 @@ so pushd_to_home
 #------------------------------------------------------------------------------
 # PLUGINS
 #------------------------------------------------------------------------------
-e ZPLUG_HOME=/home/jerome/.zplug
 e ZBELL_DURATION=60
 
 ### Added by Zinit's installer
@@ -82,24 +81,18 @@ zinit light-mode for \
     zinit-zsh/z-a-patch-dl \
     zinit-zsh/z-a-as-monitor \
     zinit-zsh/z-a-bin-gem-node
-
 ### End of Zinit's installer chunk
 
 ## ZPLUGIN
-zplugin light "chrissicool/zsh-256color"
-
-## ZPLUG
-source ~/.zplug/init.zsh
-zplug "MichaelAquilina/zsh-auto-notify"
-zplug "arzzen/calc.plugin.zsh"
-zplug 'wfxr/forgit'
-zplug "rummik/zsh-tailf"
-zplug "MichaelAquilina/zsh-you-should-use"
-
-## ZGEN
-zgen load MichaelAquilina/zsh-emojis
-zgen load rcruzper/zsh-git-plugin
-zgen load seletskiy/zsh-git-smart-commands
+zplugin light chrissicool/zsh-256color
+zplugin load MichaelAquilina/zsh-auto-notify
+zplugin load arzzen/calc.plugin.zsh
+zplugin load wfxr/forgit
+zplugin load rummik/zsh-tailf
+zplugin load MichaelAquilina/zsh-you-should-use
+zplugin load MichaelAquilina/zsh-emojis
+zplugin load rcruzper/zsh-git-plugin
+zplugin load seletskiy/zsh-git-smart-commands
 
 ## Aliases added using alias-new function
 a gitk='(gitk &)'

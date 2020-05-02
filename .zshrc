@@ -130,10 +130,6 @@ fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# ZGEN
-source "${HOME}/.zgen/zgen.zsh"
-# End ZGEN
-
 # Launch genie bottle (WSL)
 # if [[ ! -v INSIDE_GENIE  ]]; then
 #     read "yn? * Not inside the genie bottle; enter it? "
