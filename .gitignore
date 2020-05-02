@@ -15,6 +15,10 @@
 !git
 !gitk
 !zsh_custom
+!zsh_aliases
+!zsh_exports
+!zsh_plugins
+!zsh_options
 !.config/zsh/custom/themes/**
 !.config/zsh/custom/plugins/**
 !.config/nvim/init.vim

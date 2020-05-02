@@ -1,0 +1,130 @@
+#----------------------------------------||-----------------------------------#
+#          _      _      _    ___  __    ||                                   #
+#         | |    | |    | |  |__ \/_ |   || zsh_alias file, this should be    #
+#         | | ___| | ___| | __  ) || |   || contained inside:                 #
+#     _   | |/ _ \ |/ _ \ |/ / / / | |   || $HOME/$ZSH_CUSTOM                 #
+#    | |__| |  __/ |  __/   < / /_ | |   || It manages your custom aliases    #
+#     \____/ \___|_|\___|_|\_\____||_|   ||                                   #
+#________________________________________||___________________________________#
+
+# Adds new aliases inside the zsh_alias file
+function alias-new() {
+    if [[ -z "$1" || -z "$2" || $# -gt 2  ]]
+    then
+        echo "usage :"
+        echo "\t\$$0 ll 'ls -l'"
+        return 1
+    else
+        if [[ $(grep $1 $ZSH_CUSTOM_ALIAS_FILE | wc --lines) -ne 0 ]]
+        then
+            if [[ $(grep $1 $ZSH_CUSTOM_ALIAS_FILE | grep 'a ' $ZSH_CUSTOM_ALIAS_FILE | wc --lines ) -ne 0 ]]
+            then
+                echo "Alias already defined"
+                echo $(grep $1 $ZSH_CUSTOM_ALIAS_FILE)
+                return 0
+            elif [[ $(grep $1 $ZSH_CUSTOM_ALIAS_FILE | grep 'u ' $ZSH_CUSTOM_ALIAS_FILE | wc --lines ) -ne 0 ]]
+            then
+                echo "Alias is unsetted"
+                echo $(grep $1 $ZSH_CUSTOM_ALIAS_FILE)
+                if read -q "yn?Do you wish to set it?"
+                then
+                    sed --in-place "/\b\($1\)\b/d" $ZSH_CUSTOM_ALIAS_FILE
+                    echo "Successfully removed unalias line"
+                else
+                    echo "File will remain untouched"
+                    return 0
+                fi
+            fi
+        elif [[ $(grep $2 $ZSH_CUSTOM_ALIAS_FILE | wc --lines) -ne 0 ]]
+        then
+            echo "Command is already aliased with the following:"
+            echo $(grep $2 $ZSH_CUSTOM_ALIAS_FILE)
+            if read -q "yn?Do you wish to overwrite this alias?"
+            then
+                sed --in-place "/\b\($1\)\b/d" $ZSH_CUSTOM_ALIAS_FILE
+                echo "Successfully removed unalias line"
+            else
+                echo "File will remain untouched"
+                return 0
+            fi
+        fi
+        echo -e "\na $1='$2'" >> $ZSH_CUSTOM_ALIAS_FILE
+        echo "Alias successfully added to $ZSH_CUSTOM_ALIAS_FILE"
+        source $ZSH_CUSTOM_ALIAS_FILE
+        return 0
+    fi
+}
+
+# Adds new unaliases inside the zsh_alias file
+function unalias-new() {
+    if [[ -z "$1" || -z "$2" || $# -gt 2  ]]
+    then
+        echo "usage :"
+        echo "\t\$$0 ll 'ls -l'"
+    else
+        if [[ $(grep $1 $ZSH_CUSTOM_ALIAS_FILE | wc --lines) -ne 0 ]]
+        then
+            if [[ $(grep $1 $ZSH_CUSTOM_ALIAS_FILE | grep 'u ' $ZSH_CUSTOM_ALIAS_FILE | wc --lines) -ne 0 ]]
+            then
+                echo "Unalias already defined"
+                echo $(grep $1 $ZSH_CUSTOM_ALIAS_FILE)
+                return 0
+            elif [[ $(grep $1 $ZSH_CUSTOM_ALIAS_FILE | grep 'a ' $ZSH_CUSTOM_ALIAS_FILE | wc --lines) -ne 0 ]]
+            then
+                echo "Alias is setted"
+                echo $(grep $1 $ZSH_CUSTOM_ALIAS_FILE)
+                if read -q "yn?Do you wish to delete it?"
+                then
+                    sed --in-place "/\b\($1\)\b/d" $ZSH_CUSTOM_ALIAS_FILE
+                    echo "Successfully removed unalias line"
+                else
+                    echo "File will remain untouched"
+                    return 0
+                fi
+            fi
+        elif [[ $(grep $2 $ZSH_CUSTOM_ALIAS_FILE | wc --lines) -ne 0 ]]
+        then
+            echo "Command is already unaliased with the following:"
+            echo $(grep $2 $ZSH_CUSTOM_ALIAS_FILE)
+            if read -q "yn?Do you wish to overwrite this unalias?"
+            then
+                sed --in-place "/\b\($1\)\b/d" $ZSH_CUSTOM_ALIAS_FILE
+                echo "Successfully removed unalias line"
+            else
+                echo "File will remain untouched"
+                return 0
+            fi
+        fi
+    fi
+    echo -e "\nu $1='$2'" >> $ZSH_CUSTOM_ALIAS_FILE
+    echo "Unalias successfully added to $ZSH_CUSTOM_ALIAS_FILE"
+    source $ZSH_CUSTOM_ALIAS_FILE
+    return 0
+}
+
+alias a='alias'
+alias u='unset'
+
+## Git
+a gitk='(gitk &)'
+a gitg='(git gui &)'
+
+## Meteo
+# Shows meteo
+a  meteo='curl -4 wttr.in/Fontenay-aux-roses'
+a  rawmeteo='rmeteo(){curl -4 wttr.in/$1};rmeteo'
+
+## Minicom
+# Open minicom with colors
+a  minicom='sudo minicom --wrap --color=on'
+
+## SVN
+# Create patch files with context in svn
+a  svnpatch='svn diff --extensions --ignore-space-change --extensions --ignore-all-space'
+a  svnpatchctxt='svnpatch --extensions --context=10000'
+
+## VIM
+a vim='nvim'
+a vi='nvim'
+
+## Aliases added using alias-new function

@@ -1,0 +1,26 @@
+#----------------------------------------||-----------------------------------#
+#          _      _      _    ___  __    ||                                   #
+#         | |    | |    | |  |__ \/_ |   || zsh_custop file, this should be   #
+#         | | ___| | ___| | __  ) || |   || contained inside:                 #
+#     _   | |/ _ \ |/ _ \ |/ / / / | |   || $HOME/$ZSH_CUSTOM                 #
+#    | |__| |  __/ |  __/   < / /_ | |   || It sources alias, plugin and      #
+#     \____/ \___|_|\___|_|\_\____||_|   || option custom files               #
+#________________________________________||___________________________________#
+# Source alias, plugin and option filees
+CUR_DIR=${0:a:h}
+ZSH_CUSTOM_PLUG_FILE=$CUR_DIR/zsh_plugins
+ZSH_CUSTOM_ALIAS_FILE=$CUR_DIR/zsh_aliases
+ZSH_CUSTOM_OPT_FILE=$CUR_DIR/zsh_options
+ZSH_CUSTOM_EXP_FILE=$CUR_DIR/zsh_exports
+
+## Options
+source $ZSH_CUSTOM_OPT_FILE
+
+## Plugins
+source $ZSH_CUSTOM_PLUG_FILE
+
+## Aliases
+source $ZSH_CUSTOM_ALIAS_FILE
+
+## Exports
+source $ZSH_CUSTOM_EXP_FILE

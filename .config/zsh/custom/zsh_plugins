@@ -1,0 +1,96 @@
+#------------------------------------------------------------------------------
+# PLUGINS
+#------------------------------------------------------------------------------
+### Added by Zinit's installer
+if [[ ! -f $HOME/.zinit/bin/zinit.zsh  ]]; then
+    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
+    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
+        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+        print -P "%F{160}▓▒░ The clone has failed.%f%b"
+fi
+
+source "$HOME/.zinit/bin/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps}  )) && _comps[zinit]=_zinit
+
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zinit-zsh/z-a-patch-dl \
+    zinit-zsh/z-a-as-monitor \
+    zinit-zsh/z-a-bin-gem-node
+### End of Zinit's installer chunk
+
+function zinit-add() {
+    if [[ -z "$1" ]]
+    then
+        echo "usage :"
+        echo "\t\$$0 repo/plugin <mlad mode>"
+        return 1
+    elif [[ $# -eq 1 ]]
+    then
+        if [[ $(grep $1 $ZSH_CUSTOM_PLUG_FILE | wc --lines) -ne 0 ]]
+        then
+            echo "Plugin already installed:"
+            echo $(grep $1 $ZSH_CUSTOM_PLUG_FILE)
+            echo "Nothing to do"
+            return 0
+        else
+            echo -e "\nzinit light $1" >> $ZSH_CUSTOM_PLUG_FILE
+        fi
+    elif [[ $# -eq 2 ]]
+    then
+        if [[ $(grep $1 $ZSH_CUSTOM_PLUG_FILE | wc --lines) -ne 0 ]]
+        then
+            echo "Plugin already installed:"
+            echo $(grep $1 $ZSH_CUSTOM_PLUG_FILE)
+            if read -q "yn?Overwrite its load mode?"
+            then
+                sed --in-place "/\b\($1\)\b/d" $ZSH_CUSTOM_PLUG_FILE
+                echo "Plugin succesfully removed"
+            else
+                echo "Nothing to do"
+                return 0
+            fi
+        fi
+        echo -e "\nzinit $2 $1" >> $ZSH_CUSTOM_PLUG_FILE
+    fi
+    echo -e "Plugin successfully added to $ZSH_CUSTOM_PLUG_FILE"
+    echo $(grep $1 $ZSH_CUSTOM_PLUG_FILE)
+    echo "It will be installed on next zsh start"
+    return 0
+}
+
+function zinit-remove() {
+    if [[ -z "$1" ]]
+    then
+        echo "usage :"
+        echo "\t\$$0 plugin"
+        return 1
+    else
+        if [[ $(ls $HOME/.zinit/plugins | grep $1 | wc --lines) -eq 0 ]]
+        then
+            echo "Plugin not installed:"
+            echo "Nothing to do"
+        else
+            sed --in-place "/\b\($1\)\b/d" $ZSH_CUSTOM_PLUG_FILE
+            zinit delete $1
+            echo "Succesfully deleted $1"
+        fi
+    fi
+    return 0
+}
+
+# Broot
+source /home/jerome/.config/broot/launcher/bash/br
+
+zinit light arzzen/calc.plugin.zsh
+zinit light chrissicool/zsh-256color
+zinit light MichaelAquilina/zsh-auto-notify
+zinit light MichaelAquilina/zsh-you-should-use
+zinit light MichaelAquilina/zsh-emojis
+zinit light rcruzper/zsh-git-plugin
+zinit light rummik/zsh-tailf
+zinit light seletskiy/zsh-git-smart-commands
+zinit light wfxr/forgit

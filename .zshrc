@@ -16,8 +16,11 @@ export DISPLAY=$(grep -oP "(?<=nameserver ).+" /etc/resolv.conf):0
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-# Path to your alias file
-export ALIAS_FILE="$HOME/.config/zsh/zsh_custom"
+# Would you like to use another custom folder than $ZSH/custom?
+ZSH_CUSTOM=$HOME/.config/zsh/custom
+
+# Path to your zsh_custom file
+ZSH_CUSTOM_INDEX="$ZSH_CUSTOM/zsh_custom"
 
 # Set name of the theme to load 
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
@@ -40,7 +43,7 @@ DISABLE_AUTO_UPDATE="false"
 DISABLE_UPDATE_PROMPT="true"
 
 # How often to auto-update (in days).
-export UPDATE_ZSH_DAYS=5
+UPDATE_ZSH_DAYS=5
 
 # If pasting URLs and other text is messed up turn to true.
 DISABLE_MAGIC_FUNCTIONS=false
@@ -72,9 +75,6 @@ HISTORY_IGNORE="(ls|la|l|cd|pwd|exit)"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
 HIST_STAMPS="dd/mm/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-ZSH_CUSTOM=$HOME/.config/zsh/custom
 
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
@@ -112,21 +112,8 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 autoload -U compinit && compinit
 
-# User configuration
-export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='nvim'
-else
-  export EDITOR='nvim'
-fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+# Load user defined custom aliases, options and plugins
+source $ZSH_CUSTOM_INDEX
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -140,18 +127,3 @@ fi
 #         exec /usr/bin/genie -s
 #     fi
 # fi
-
-# Load alias file
-source $ALIAS_FILE
-function alias-new() {
-    if [[ -z "$1" || -z "$2" || $# -gt 2 ]]; then
-        echo "usage :"
-        echo "\t\$$0 ll 'ls -l'"
-    else
-        echo -e "\na $1='$2'" >> $ALIAS_FILE && echo "alias successfully added to $ALIAS_FILE"
-        source $ALIAS_FILE
-    fi
-}
-
-# broot
-source /home/jerome/.config/broot/launcher/bash/br
