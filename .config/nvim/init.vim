@@ -89,6 +89,9 @@ Plug 'aserebryakov/vim-branch-stack', {'for':'C/C++'}
                             " Follow branching path to line
 Plug 'luchermitte/vimfold4c', {'for':'C/C++'}
                             " C function folding
+Plug 'xavierd/Clang-complete', {'for': 'C/C++'}
+                            " C/C++ workspace specific completion
+
 " Fortran
 Plug 'vim-scripts/fortran.vim'
                             " Fortran definition
